@@ -4,4 +4,5 @@ export class Turma {
     semestre!: string;
     ano!: number;
     turno!: string;
+    
 }
