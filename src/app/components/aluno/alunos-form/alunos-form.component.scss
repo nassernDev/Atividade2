@@ -1,0 +1,74 @@
+$primary-color: #007bff;
+$success-color: #28a745;
+$border-color: #dee2e6;
+$background-light: #f8f9fa;
+$text-color: #333;
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border: none;
+    .card-body {
+        text-align: center;
+        h2 {
+            color: $primary-color;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+form {
+    input {
+        border: 1px solid $border-color;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        &:focus {
+            border-color: $primary-color;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+        }
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &.btn-primary {
+            background-color: $primary-color;
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
+        }
+
+        &.btn-success {
+            background-color: $success-color;
+            &:hover {
+                background-color: darken($success-color, 10%);
+            }
+        }
+    }
+}
+
+.border {
+    border: 2px dashed $border-color;
+    text-align: center;
+    padding: 10px;
+    background-color: $background-light;
+    border-radius: 5px;
+    font-weight: bold;
+    color: $text-color;
+}
