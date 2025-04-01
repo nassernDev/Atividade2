@@ -13,46 +13,46 @@ import { Turma } from "../../../models/turma";
 export class TurmasListComponent {
 
   @Output("retornoTurma") retornoTurma = new EventEmitter();
-  @Input("modoModal") modoModal : boolean = false;
+  @Input("modoModal") modoModal: boolean = false;
 
-    turmaService = inject(TurmaService);
-    lista: Turma[] = [];
-  
-    constructor(){
-  
+  turmaService = inject(TurmaService);
+  lista: Turma[] = [];
+
+  constructor() {
+
     this.findAll();
-  
-    }
-  findAll(){
-      this.turmaService.findAll().subscribe({
-        next: (listaTurmaRetornada) => {
-          this.lista = listaTurmaRetornada;
+
+  }
+  findAll() {
+    this.turmaService.findAll().subscribe({
+      next: (listaTurmaRetornada) => {
+        this.lista = listaTurmaRetornada;
+      },
+      error: (erro) => {
+        alert('Deu erro!');
+      }
+    });
+  }
+
+  deleteById(turma: Turma) {
+
+    if (confirm("Deseja deletar" + turma.nome + "?")) {
+      this.turmaService.deleteById(turma.id).subscribe({
+        next: (mensagem) => {
+          alert(mensagem);
+          this.findAll();
         },
         error: (erro) => {
-          alert('Deu erro!');
+          alert('Deu erro meu parceiro!');
         }
       });
     }
-  
-    deleteById(turma : Turma){
-      
-      if (confirm("Deseja deletar" + turma.nome + "?")){
-        this.turmaService.deleteById(turma.id).subscribe({
-          next: (mensagem) => {
-            alert(mensagem);
-            this.findAll();
-          },
-          error: (erro) => {
-            alert('Deu erro meu parceiro!');
-          }
-        });
-      }
-  
-      }
-      
-      selecionarTurma(turma: Turma){
-        this.retornoTurma.emit(turma);
 
-      }
+  }
+
+  selecionarTurma(turma: Turma) {
+    this.retornoTurma.emit(turma);
+
+  }
 
 }

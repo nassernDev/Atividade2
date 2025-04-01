@@ -20,14 +20,71 @@
                         Turno <br>
                         <input [(ngModel)]="turma.turno" type="text" class="form-control" name="turno">
                         <br />
-                        <button (click)="save()" [disabled]="!formulario.valid" class="btn btn-success">Salvar</button>
+                       
+                        <button (click)="buscarProfessor()"  class="btn btn-success">Buscar Professor</button>
                     </form>
+                    <table class="border table table-striped">
+                        <thead>
+          
+                          <tr>
+                            <th>Nome</th>
+                            <th>Especialidade</th>
+                            <th></th>
+                          </tr>
+          
+                        </thead>
+          
+                        <tbody>
+          
+                          @for (professor of turma.professores; track $index) {
+                          <tr>
+                            <td>{{professor.nome}}</td>
+                            <td>{{professor.especialidade}}</td>
+                            <td>
+                              <button class="btn btn-danger btn-rounded" type="button" (click)="deletarProfessor(professor)">
+                                <i class="fas fa-trash fa-xs"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          }@empty {
+                          <div class="alinharAEsquerda">
+                            <br><br>
+                            <h5>Nenhum profressor vinculado.</h5>
+                            <br><br>
+                          </div>
+                          }
+          
+                        </tbody>
+          
+                      </table>
 
+                      <button (click)="save()" [disabled]="!formulario.valid" class="btn btn-success">Salvar</button>
+          
                 </div>
             </div>
         </div>
+
+        
 
         <div class="col-4"></div>
     </div>
 </div>
 
+
+
+
+
+<ng-template #modalProfessorList>
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Selecionar Professor</h5>
+        
+        <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+    </div>
+    <div class="modal-body">
+
+        <app-professores-list [modoModal]="true" (retorno)="retornoProfessorList($event)"></app-professores-list>
+
+    </div>
+
+</ng-template>

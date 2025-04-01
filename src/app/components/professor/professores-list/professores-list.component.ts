@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Professor } from '../../../models/professor';
+import { ProfessorService } from '../../../services/professor.service';
 
 @Component({
   selector: 'app-professores-list',
@@ -8,40 +9,32 @@ import { Professor } from '../../../models/professor';
   templateUrl: './professores-list.component.html',
   styleUrl: './professores-list.component.scss'
 })
+
+
 export class ProfessoresListComponent {
   lista: Professor[] = [];
+
+  @Input("modoModal") modoModal: boolean = false;
+  @Output("retorno") retorno = new EventEmitter();
+
+  ProfessorService = inject(ProfessorService);
   
     constructor() {
       this.findAll();
+
     }
   
   
     findAll(){
       //DEPOIS EU VOU TER A COMUNICAÇÃO COM O SERVICE 
-  
-      let professor1 = new Professor();
-      professor1.id = 1;
-      professor1.nome = 'ronaldo da arte';
-      professor1.cpf = '111.111.111-11';
-      professor1.email='email@hotmail.com';
-      professor1.especialidade= 'ADS';
-
-  
-      let professor2 = new Professor();
-      professor2.id = 2;
-      professor2.nome = 'Joao da biologia';
-      professor2.cpf = '111.111.111-11';
-      professor2.email='email@hotmail.com';
-      professor2.especialidade= 'ADS';
-  
-      let professor3 = new Professor();
-      professor3.id = 3;
-      professor3.nome = 'Pedro da fisica';
-      professor3.cpf = '111.111.111-11';
-      professor3.email='email@hotmail.com';
-      professor3.especialidade= 'ADS';
-  
-      this.lista.push(professor1, professor2, professor3);
+      this.ProfessorService.findAll().subscribe({
+        next: (listaTurmaRetornada) => {
+          this.lista = listaTurmaRetornada;
+        },
+        error: (erro) => {
+          alert('Deu erro seu otario!');
+        }
+      });
     
     }
   
@@ -50,5 +43,8 @@ export class ProfessoresListComponent {
       if(confirm('Deseja deletar isso aí?')){
         this.lista.splice(indice, 1); //deletando um objeto na posição INDICE
       }
+    }
+    selecionar(professor: Professor){
+      this.retorno.emit(professor);
     }
 }
